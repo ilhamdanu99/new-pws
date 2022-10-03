@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\BeritaController;
+use Illuminate\Routing\Route as RoutingRoute;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,12 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/home', function () {
     return view('Home');
 });
+
 Route::get('/about', function () {
     return view('About');
 });
-Route::get('/berita', function () {
-    return view('Berita');
-});
+
+Route::get('/berita', [BeritaController::class, 'index']);
+Route::get('/berita/{detil_berita:slug}', [BeritaController::class, 'show']);
+
+Route::get('/login',[LoginController::class,'index'])->name('login')->middleware('guest');
+Route::get('/register',[RegisterController::class, 'index'])->middleware('guest');
